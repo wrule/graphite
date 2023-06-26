@@ -1,3 +1,4 @@
+import 'global-agent/bootstrap';
 import ccxt from 'ccxt';
 
 const secret = require('../.secret.json');
