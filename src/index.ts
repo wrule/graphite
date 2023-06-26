@@ -19,6 +19,8 @@ async function main() {
     .filter((key) => key.includes('ETH'))
     .filter((key) => key.includes(':'))
     .forEach((key) => console.log(key));
+
+  exchange.createMarketBuyOrder('ETH/USDT:USDT', 0.001);
 }
 
 main();
