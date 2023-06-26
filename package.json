@@ -4,5 +4,8 @@
   "main": "dist/index.js",
   "repository": "https://github.com/wrule/graphite.git",
   "license": "MIT",
-  "private": false
+  "private": false,
+  "dependencies": {
+    "typescript": "^4.9.5"
+  }
 }
