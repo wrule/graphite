@@ -8,10 +8,10 @@ async function main() {
   console.log('你好，世界');
   const exchange = new ccxt.binance({
     ...secret.exchange,
-    options: {
-      defaultType: 'future',
-      hedgeMode: true,
-    },
+    // options: {
+    //   defaultType: 'future',
+    //   hedgeMode: true,
+    // },
   });
   // const rsp = await exchange.fetchBalance();
   // console.log(rsp);
@@ -21,12 +21,10 @@ async function main() {
     .filter((key) => key.includes(':'))
     .forEach((key) => console.log(key));
 
-  // const rsp = await exchange.createMarketSellOrder('ETH/USDT', 0.03, {
-  //   positionSide: 'LONG',
-  // });
-  // fs.writeFileSync('output.json', JSON.stringify(rsp, null, 2));
-  const rsp = await exchange.fetchTrades('ETH/USDT:USDT', undefined, 3);
-  fs.writeFileSync('output-2.json', JSON.stringify(rsp, null, 2));
+  const rsp = await exchange.createMarketBuyOrder('ETH/USDT', 0.01);
+  fs.writeFileSync('output/output.json', JSON.stringify(rsp, null, 2));
+  // const rsp = await exchange.fetchTrades('ETH/USDT:USDT', undefined, 3);
+  // fs.writeFileSync('output-2.json', JSON.stringify(rsp, null, 2));
 }
 
 main();
