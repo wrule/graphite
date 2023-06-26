@@ -1,4 +1,5 @@
 import 'global-agent/bootstrap';
+import fs from 'fs';
 import ccxt from 'ccxt';
 
 const secret = require('../.secret.json');
@@ -20,7 +21,10 @@ async function main() {
     .filter((key) => key.includes(':'))
     .forEach((key) => console.log(key));
 
-  exchange.createMarketBuyOrder('ETH/USDT:USDT', 0.001);
+  const rsp = await exchange.createMarketBuyOrder('ETH/USDT', 0.01, {
+    positionSide: 'LONG',
+  });
+  fs.writeFileSync('output.json', JSON.stringify(rsp, null, 2));
 }
 
 main();
