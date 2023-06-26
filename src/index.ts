@@ -21,10 +21,12 @@ async function main() {
     .filter((key) => key.includes(':'))
     .forEach((key) => console.log(key));
 
-  const rsp = await exchange.createMarketBuyOrder('ETH/USDT', 0.01, {
-    positionSide: 'LONG',
-  });
-  fs.writeFileSync('output.json', JSON.stringify(rsp, null, 2));
+  // const rsp = await exchange.createMarketSellOrder('ETH/USDT', 0.03, {
+  //   positionSide: 'LONG',
+  // });
+  // fs.writeFileSync('output.json', JSON.stringify(rsp, null, 2));
+  const rsp = await exchange.fetchTrades('ETH/USDT:USDT', undefined, 3);
+  fs.writeFileSync('output-2.json', JSON.stringify(rsp, null, 2));
 }
 
 main();
