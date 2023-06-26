@@ -1,0 +1,8 @@
+{
+  "name": "graphite",
+  "version": "0.1.0",
+  "main": "dist/index.js",
+  "repository": "https://github.com/wrule/graphite.git",
+  "license": "MIT",
+  "private": false
+}
