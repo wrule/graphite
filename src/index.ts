@@ -10,19 +10,20 @@ const secret = require('../.secret.json');
 async function main() {
   const exchange = new ccxt.binance({
     ...secret.exchange,
-    // options: {
-    //   defaultType: 'future',
-    //   hedgeMode: true,
-    // },
+    options: {
+      defaultType: 'future',
+      hedgeMode: true,
+    },
   });
   const markets = await exchange.loadMarkets();
-  Object.keys(markets)
-    .filter((key) => key.includes('ETH'))
-    .filter((key) => key.includes(':'))
-    .forEach((key) => console.log(key));
+  // Object.keys(markets)
+  //   .filter((key) => key.includes('ETH'))
+  //   .filter((key) => key.includes(':'))
+  //   .forEach((key) => console.log(key));
 
-  const contract = new ContractBinance({ symbol: 'ETH/USDT', exchange });
-  await contract.Test();
+  const contract1 = new ContractBinance({ symbol: 'ETH/USDT', exchange });
+  const contract2 = new ContractBinance({ symbol: 'ETH/USDT:USDT', exchange });
+  Promise.all([contract1.Test(), contract2.Test()]);
   // const order = await contract.MarketLongSell(0.01);
   // fs.writeFileSync('output/output.json', JSON.stringify(order, null, 2));
 }

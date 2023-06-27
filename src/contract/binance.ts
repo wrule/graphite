@@ -36,7 +36,7 @@ class ContractBinance implements Contract {
   }
 
   public async Test() {
-    const a = await this.config.exchange.fetchTicker(this.config.symbol);
+    const a = await this.config.exchange.fetchOrderBook(this.config.symbol, 5);
     console.log(a);
   }
 }
