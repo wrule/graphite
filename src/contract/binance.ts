@@ -34,4 +34,9 @@ class ContractBinance implements Contract {
       positionSide: 'SHORT',
     });
   }
+
+  public async Test() {
+    const a = await this.config.exchange.fetchTicker(this.config.symbol);
+    console.log(a);
+  }
 }

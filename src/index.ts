@@ -22,8 +22,9 @@ async function main() {
     .forEach((key) => console.log(key));
 
   const contract = new ContractBinance({ symbol: 'ETH/USDT:USDT', exchange });
-  const order = await contract.MarketLongBuy(0.01);
-  fs.writeFileSync('output/output.json', JSON.stringify(order, null, 2));
+  await contract.Test();
+  // const order = await contract.MarketLongSell(0.01);
+  // fs.writeFileSync('output/output.json', JSON.stringify(order, null, 2));
 }
 
 main();
