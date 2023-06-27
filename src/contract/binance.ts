@@ -31,7 +31,11 @@ class ContractBinance implements Contract {
   }
 
   public async MarketShortBuy(funds: number) {
-
+    const price = await this.getLastAskPrice();
+    const amount = this.config.exchange.amountToPrecision(this.config.symbol, funds / price);
+    return this.config.exchange.createMarketBuyOrder(this.config.symbol, amount, {
+      positionSide: 'SHORT',
+    });
   }
 
   public async MarketShortSell(assets: number) {
@@ -39,9 +43,5 @@ class ContractBinance implements Contract {
     return this.config.exchange.createMarketSellOrder(this.config.symbol, amount, {
       positionSide: 'SHORT',
     });
-  }
-
-  public async Test() {
-    this.getLastAskPrice();
   }
 }
