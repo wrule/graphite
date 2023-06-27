@@ -9,10 +9,12 @@ class SpotBinance implements Spot {
   ) { }
 
   public async Buy(funds: number) {
-    return this.exchange.createMarketBuyOrder(this.symbol, funds, { });
+    const a = this.exchange.costToPrecision(this.symbol, funds);
+    return this.exchange.createMarketBuyOrder(this.symbol, a, { quoteOrderQty: a });
   }
 
   public async Sell(assets: number) {
-    return this.exchange.createMarketSellOrder(this.symbol, assets, { });
+    const b = this.exchange.amountToPrecision(this.symbol, assets);
+    return this.exchange.createMarketSellOrder(this.symbol, b);
   }
 }
