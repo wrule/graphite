@@ -1,7 +1,11 @@
 
 export
 class Wallet {
-  private wallet = new Map<string, number>();
+  public constructor(params: { [name: string]: number } = { }) {
+    this.wallet = new Map<string, number>(Object.entries(params));
+  }
+
+  private wallet: Map<string, number>;
 
   public Get(name: string) {
     return this.wallet.get(name) ?? 0;
