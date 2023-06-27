@@ -1,8 +1,8 @@
 
 export
 interface Contract {
-  MarketLongBuy(funds: number): Promise<any>;
-  MarketLongSell(assets: number): Promise<any>;
-  MarketShortBuy(funds: number): Promise<any>;
-  MarketShortSell(assets: number): Promise<any>;
+  MarketLongOpen(funds: number): Promise<any>;
+  MarketLongClose(assets: number): Promise<any>;
+  MarketShortOpen(funds: number): Promise<any>;
+  MarketShortClose(assets: number): Promise<any>;
 }
