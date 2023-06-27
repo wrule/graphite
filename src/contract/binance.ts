@@ -14,7 +14,7 @@ class ContractBinance implements Contract {
 
   }
 
-  public async MarketLongSell(funds: number) {
+  public async MarketLongSell(assets: number) {
 
   }
 
@@ -22,7 +22,7 @@ class ContractBinance implements Contract {
 
   }
 
-  public async MarketShortSell(funds: number) {
+  public async MarketShortSell(assets: number) {
 
   }
 }
