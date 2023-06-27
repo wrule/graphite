@@ -21,11 +21,9 @@ async function main() {
   //   .filter((key) => key.includes(':'))
   //   .forEach((key) => console.log(key));
 
-  const contract1 = new ContractBinance({ symbol: 'ETH/USDT', exchange });
-  const contract2 = new ContractBinance({ symbol: 'ETH/USDT:USDT', exchange });
-  Promise.all([contract1.Test(), contract2.Test()]);
-  // const order = await contract.MarketLongSell(0.01);
-  // fs.writeFileSync('output/output.json', JSON.stringify(order, null, 2));
+  const contract = new ContractBinance({ symbol: 'ETH/USDT:USDT', exchange });
+  const order = await contract.MarketLongBuy(10);
+  fs.writeFileSync('output/output.json', JSON.stringify(order, null, 2));
 }
 
 main();
