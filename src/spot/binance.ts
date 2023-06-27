@@ -8,12 +8,12 @@ class SpotBinance implements Spot {
     private readonly exchange: binance,
   ) { }
 
-  public async Buy(funds: number) {
+  public async MarketBuy(funds: number) {
     const amount = this.exchange.costToPrecision(this.symbol, funds);
     return this.exchange.createMarketBuyOrder(this.symbol, amount, { quoteOrderQty: amount });
   }
 
-  public async Sell(assets: number) {
+  public async MarketSell(assets: number) {
     const amount = this.exchange.amountToPrecision(this.symbol, assets);
     return this.exchange.createMarketSellOrder(this.symbol, amount);
   }
