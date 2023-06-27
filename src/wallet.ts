@@ -4,7 +4,7 @@ class Wallet {
   private wallet = new Map<string, number>();
 
   public Get(name: string) {
-    return this.wallet.get(name) || 0;
+    return this.wallet.get(name) ?? 0;
   }
 
   public Set(name: string, amount: number) {
@@ -12,10 +12,10 @@ class Wallet {
   }
 
   public In(name: string, amount: number) {
-
+    this.Set(name, this.Get(name) + amount);
   }
 
   public Out(name: string, amount: number) {
-    
+    this.Set(name, this.Get(name) - amount);
   }
 }
