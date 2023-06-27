@@ -22,4 +22,8 @@ class Wallet {
   public Out(name: string, amount: number) {
     this.Set(name, this.Get(name) - amount);
   }
+
+  public States() {
+    return Object.fromEntries(this.wallet.entries());
+  }
 }
