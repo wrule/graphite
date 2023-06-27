@@ -2,6 +2,7 @@ import 'global-agent/bootstrap';
 import fs from 'fs';
 import ccxt from 'ccxt';
 import { Wallet } from './wallet';
+import { SpotBinance } from './spot/binance';
 
 const secret = require('../.secret.json');
 
@@ -32,8 +33,9 @@ async function main() {
     .filter((key) => key.includes(':'))
     .forEach((key) => console.log(key));
 
-  const rsp = await exchange.createMarketSellOrder('ETH/USDT', 0.01);
-  fs.writeFileSync('output/output.json', JSON.stringify(rsp, null, 2));
+  const spot = new SpotBinance({ symbol: 'ETH/USDT', exchange });
+  // const order = await spot.MarketSell(0.0058);
+  fs.writeFileSync('output/output.json', JSON.stringify(order, null, 2));
   // const rsp = await exchange.fetchTrades('ETH/USDT:USDT', undefined, 3);
   // fs.writeFileSync('output-2.json', JSON.stringify(rsp, null, 2));
 }
