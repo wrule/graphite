@@ -7,6 +7,6 @@ interface Binance {
   MarketLongClose(symbol: string, assets: number): Promise<Order>;
 }
 
-export { BinanceSpot } from './spot';
-export { BinanceMargin } from './margin';
-export { BinanceFutures } from './futures';
+export { BinanceSpot, CreateBinanceSpot } from './spot';
+export { BinanceMargin, CreateBinanceMargin } from './margin';
+export { BinanceFutures, CreateBinanceFutures } from './futures';
