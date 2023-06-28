@@ -47,6 +47,7 @@ async function CreateBinanceFutures(config: any) {
     ...config,
     options: {
       defaultType: 'future',
+      hedgeMode: true,
       ...config.options,
     },
   }));
