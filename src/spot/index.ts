@@ -1,4 +1,3 @@
-import { Order } from 'ccxt';
 
 export
 interface Spot {
