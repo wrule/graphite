@@ -10,12 +10,12 @@ class MarginBinance implements Margin {
     },
   ) { }
 
-  public async MarketOpen(funds: number) {
+  public async MarketLongOpen(funds: number) {
     const amount = this.config.exchange.costToPrecision(this.config.symbol, funds);
     return this.config.exchange.createMarketBuyOrder(this.config.symbol, amount, { quoteOrderQty: amount });
   }
 
-  public async MarketClose(assets: number) {
+  public async MarketLongClose(assets: number) {
     const amount = this.config.exchange.amountToPrecision(this.config.symbol, assets);
     return this.config.exchange.createMarketSellOrder(this.config.symbol, amount);
   }

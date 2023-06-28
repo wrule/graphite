@@ -1,6 +1,6 @@
 
 export
 interface Margin {
-  MarketOpen(funds: number): Promise<any>;
-  MarketClose(assets: number): Promise<any>;
+  MarketLongOpen(funds: number): Promise<any>;
+  MarketLongClose(assets: number): Promise<any>;
 }

@@ -2,6 +2,6 @@ import { Order } from 'ccxt';
 
 export
 interface Spot {
-  MarketBuy(funds: number): Promise<Order>;
-  MarketSell(assets: number): Promise<Order>;
+  MarketLongOpen(funds: number): Promise<any>;
+  MarketLongClose(assets: number): Promise<any>;
 }

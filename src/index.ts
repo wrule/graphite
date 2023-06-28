@@ -12,7 +12,7 @@ async function main() {
   const exchange = new ccxt.binance({
     ...secret.exchange,
     options: {
-      // defaultType: 'margin',
+      defaultType: 'margin',
       // hedgeMode: true,
     },
   });
@@ -23,7 +23,7 @@ async function main() {
   //   .forEach((key) => console.log(key));
 
   const ex = new MarginBinance({ symbol: 'ETH/USDT', exchange });
-  const order = await ex.MarketClose(0.0053 * 2);
+  const order = await ex.MarketClose(10);
   fs.writeFileSync('output/output.json', JSON.stringify(order, null, 2));
 }
 
