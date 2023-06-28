@@ -22,9 +22,9 @@ async function main() {
     .filter((key) => key.includes(':'))
     .forEach((key) => console.log(key));
 
-  // const ex = new MarginBinance({ symbol: 'ETH/USDT', exchange });
-  // const order = await ex.MarketClose(10);
-  // fs.writeFileSync('output/output.json', JSON.stringify(order, null, 2));
+  const ex = new MarginBinance({ symbol: 'ETH/USDT', exchange });
+  const order = await ex.MarketLongOpen(20);
+  fs.writeFileSync('output/output.json', JSON.stringify(order, null, 2));
 }
 
 main();
