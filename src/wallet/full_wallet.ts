@@ -16,10 +16,10 @@ extends Wallet {
     const market = this.exchange.Exchange.market(symbol);
     console.log(this.States());
     const order = await this.exchange.MarketLongOpen(symbol, this.Get(market.quote));
-    this.Out(market.quote, order.cost);
-    this.In(market.base, order.amount);
+    this.Send(market.quote, order.cost);
+    this.Receive(market.base, order.amount);
     order.trades.forEach((trade) => {
-      this.Out(trade.fee.currency, trade.fee.cost);
+      this.Send(trade.fee.currency, trade.fee.cost);
     });
     console.log(this.States());
     fs.writeFileSync('output/output-buy.json', JSON.stringify(order, null, 2));
@@ -29,10 +29,10 @@ extends Wallet {
     const market = this.exchange.Exchange.market(symbol);
     console.log(this.States());
     const order = await this.exchange.MarketLongClose(symbol, this.Get(market.base));
-    this.Out(market.base, order.amount);
-    this.In(market.quote, order.cost);
+    this.Send(market.base, order.amount);
+    this.Receive(market.quote, order.cost);
     order.trades.forEach((trade) => {
-      this.Out(trade.fee.currency, trade.fee.cost);
+      this.Send(trade.fee.currency, trade.fee.cost);
     });
     console.log(this.States());
     fs.writeFileSync('output/output-sell.json', JSON.stringify(order, null, 2));
