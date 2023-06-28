@@ -15,11 +15,6 @@ class BinanceSpot implements Binance {
     return this.exchange;
   }
 
-  public async Init() {
-    await this.exchange.loadMarkets();
-    return this;
-  }
-
   public MarketLongOpen(funds: number) {
     const amount = this.exchange.costToPrecision(this.symbol, funds);
     return this.exchange.createMarketBuyOrder(this.symbol, amount, {
@@ -31,4 +26,11 @@ class BinanceSpot implements Binance {
     const amount = this.exchange.amountToPrecision(this.symbol, assets);
     return this.exchange.createMarketSellOrder(this.symbol, amount);
   }
+}
+
+export
+async function CreateBinanceSpot(symbol: string, config: any) {
+  const exchange = new BinanceSpot(symbol, config);
+  await exchange.Exchange.loadMarkets();
+  return exchange;
 }
