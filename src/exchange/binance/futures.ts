@@ -16,6 +16,15 @@ class BinanceFutures implements Binance {
 
   private exchange: binance;
 
+  public get Exchange() {
+    return this.exchange;
+  }
+
+  public async Init() {
+    await this.exchange.loadMarkets();
+    return this;
+  }
+
   private async getLastAskPrice() {
     const book = await this.exchange.fetchOrderBook(this.symbol, 10);
     return book.asks[0][0];

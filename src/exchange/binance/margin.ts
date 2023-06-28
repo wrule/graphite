@@ -15,6 +15,15 @@ class BinanceMargin implements Binance {
 
   private exchange: binance;
 
+  public get Exchange() {
+    return this.exchange;
+  }
+
+  public async Init() {
+    await this.exchange.loadMarkets();
+    return this;
+  }
+
   public MarketLongOpen(funds: number) {
     const amount = this.exchange.costToPrecision(this.symbol, funds);
     return this.exchange.createMarketBuyOrder(this.symbol, amount, {
