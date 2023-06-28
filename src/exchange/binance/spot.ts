@@ -17,3 +17,10 @@ class BinanceSpot implements Binance {
     return this.Exchange.createMarketSellOrder(symbol, amount);
   }
 }
+
+export
+async function CreateBinanceSpot(config: any) {
+  const exchange = new BinanceSpot(new binance({ ...config }));
+  await exchange.Exchange.loadMarkets();
+  return exchange;
+}
