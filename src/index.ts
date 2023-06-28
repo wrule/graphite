@@ -8,10 +8,11 @@ const secret = require('../.secret.json');
 async function main() {
   const exchange = new ccxt.binance({
     ...secret.exchange,
-    // options: {
-    //   defaultType: 'margin',
-    //   // hedgeMode: true,
-    // },
+    options: {
+      defaultType: 'future',
+      // defaultType: 'margin',
+      // hedgeMode: true,
+    },
   });
   const markets = await exchange.loadMarkets();
   Object.keys(markets)
@@ -20,7 +21,7 @@ async function main() {
     .forEach((key) => console.log(key));
 
   const ex: Binance = new BinanceFutures({ symbol: 'ETH/USDT', exchange });
-  const order = await ex.MarketLongClose(20);
+  const order = await ex.MarketLongClose(0.01);
   fs.writeFileSync('output/output.json', JSON.stringify(order, null, 2));
 }
 

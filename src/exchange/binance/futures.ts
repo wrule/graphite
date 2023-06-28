@@ -18,7 +18,6 @@ class BinanceFutures implements Binance {
     const amount = this.config.exchange.amountToPrecision(this.config.symbol, funds / price);
     return this.config.exchange.createMarketBuyOrder(this.config.symbol, amount, {
       positionSide: 'LONG',
-      type: 'futures',
     });
   }
 
