@@ -23,7 +23,7 @@ async function main() {
     .forEach((key) => console.log(key));
 
   const ex = new MarginBinance({ symbol: 'ETH/USDT', exchange });
-  const order = await ex.MarketLongOpen(20);
+  const order = await ex.MarketLongClose(0.0106);
   fs.writeFileSync('output/output.json', JSON.stringify(order, null, 2));
 }
 
