@@ -40,3 +40,16 @@ class BinanceFutures implements Binance {
     });
   }
 }
+
+export
+async function CreateBinanceFutures(config: any) {
+  const exchange = new BinanceFutures(new binance({
+    ...config,
+    options: {
+      defaultType: 'future',
+      ...config.options,
+    },
+  }));
+  await exchange.Exchange.loadMarkets();
+  return exchange;
+}
