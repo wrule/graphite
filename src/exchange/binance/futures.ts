@@ -3,12 +3,10 @@ import { Binance } from '.';
 
 export
 class BinanceFutures implements Binance {
-  public constructor(
-    private readonly config: {
-      symbol: string,
-      exchange: binance,
-    },
-  ) { }
+  public constructor(private readonly config: {
+    symbol: string,
+    exchange: binance,
+  }) { }
 
   private async getLastAskPrice() {
     const book = await this.config.exchange.fetchOrderBook(this.config.symbol, 10);
