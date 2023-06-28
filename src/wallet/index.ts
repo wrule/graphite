@@ -11,16 +11,12 @@ class Wallet {
     return this.wallet.get(name) ?? 0;
   }
 
-  public Set(name: string, amount: number) {
-    return this.wallet.set(name, amount);
+  public Send(name: string, amount: number) {
+    this.wallet.set(name, this.Get(name) - amount);
   }
 
-  public In(name: string, amount: number) {
-    this.Set(name, this.Get(name) + amount);
-  }
-
-  public Out(name: string, amount: number) {
-    this.Set(name, this.Get(name) - amount);
+  public Receive(name: string, amount: number) {
+    this.wallet.set(name, this.Get(name) + amount);
   }
 
   public States() {
