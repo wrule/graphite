@@ -12,7 +12,7 @@ extends Wallet {
     super(params);
   }
 
-  public async BuyFull(symbol: string) {
+  public async OpenFull(symbol: string) {
     const market = this.exchange.Exchange.market(symbol);
     console.log(this.States());
     const order = await this.exchange.MarketLongOpen(symbol, this.Get(market.quote));
@@ -25,7 +25,7 @@ extends Wallet {
     fs.writeFileSync('output/output-buy.json', JSON.stringify(order, null, 2));
   }
 
-  public async SellFull(symbol: string) {
+  public async CloseFull(symbol: string) {
     const market = this.exchange.Exchange.market(symbol);
     console.log(this.States());
     const order = await this.exchange.MarketLongClose(symbol, this.Get(market.base));
