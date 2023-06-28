@@ -20,3 +20,16 @@ class BinanceMargin implements Binance {
     });
   }
 }
+
+export
+async function CreateBinanceMargin(config: any) {
+  const exchange = new BinanceMargin(new binance({
+    ...config,
+    options: {
+      defaultType: 'margin',
+      ...config.options,
+    },
+  }));
+  await exchange.Exchange.loadMarkets();
+  return exchange;
+}
