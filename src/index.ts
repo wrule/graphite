@@ -1,7 +1,7 @@
 import 'global-agent/bootstrap';
 import fs from 'fs';
 import ccxt from 'ccxt';
-import { Binance, BinanceSpot } from './exchange/binance';
+import { Binance, BinanceFutures, BinanceMargin, BinanceSpot } from './exchange/binance';
 
 const secret = require('../.secret.json');
 
@@ -19,8 +19,8 @@ async function main() {
     .filter((key) => key.includes(':'))
     .forEach((key) => console.log(key));
 
-  const ex: Binance = new BinanceSpot({ symbol: 'ETH/USDT', exchange });
-  const order = await ex.MarketLongOpen(20);
+  const ex: Binance = new BinanceFutures({ symbol: 'ETH/USDT', exchange });
+  const order = await ex.MarketLongClose(20);
   fs.writeFileSync('output/output.json', JSON.stringify(order, null, 2));
 }
 
