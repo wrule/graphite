@@ -1,6 +1,6 @@
 import fs from 'fs';
 import { okex5 } from 'ccxt';
-import { OKX } from '.';
+import { OKX, OrderX } from '.';
 
 export
 class OKXSpot implements OKX {
@@ -14,7 +14,10 @@ class OKXSpot implements OKX {
     fs.writeFileSync('output/output-okx-buy.json', JSON.stringify(order, null, 2));
     const order_detail = await this.Exchange.fetchOrder(order.id, symbol);
     fs.writeFileSync('output/output-okx-buy-detail.json', JSON.stringify(order_detail, null, 2));
-    return order_detail;
+    return {
+      ...order_detail,
+      fee_list: (order_detail as any).fees || [],
+    } as OrderX;
   }
 
   public async MarketLongClose(symbol: string, assets: number) {
@@ -23,7 +26,10 @@ class OKXSpot implements OKX {
     fs.writeFileSync('output/output-okx-sell.json', JSON.stringify(order, null, 2));
     const order_detail = await this.Exchange.fetchOrder(order.id, symbol);
     fs.writeFileSync('output/output-okx-sell-detail.json', JSON.stringify(order_detail, null, 2));
-    return order_detail;
+    return {
+      ...order_detail,
+      fee_list: (order_detail as any).fees || [],
+    } as OrderX;
   }
 }
 
