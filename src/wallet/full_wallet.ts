@@ -1,12 +1,13 @@
 import { Wallet } from '.';
 import { Binance } from '../exchange/binance';
 import fs from 'fs';
+import { OKX } from '../exchange/okx';
 
 export
 class FullWallet
 extends Wallet {
   public constructor(
-    private exchange: Binance,
+    private exchange: OKX,
     params: { [name: string]: number } = { },
   ) {
     super(params);
@@ -18,8 +19,7 @@ extends Wallet {
     const order = await this.exchange.MarketLongOpen(symbol, this.Get(market.quote));
     this.Send(market.quote, order.cost);
     this.Receive(market.base, order.amount);
-    order.trades.forEach((trade) => this.Send(trade.fee.currency, trade.fee.cost));
-    fs.writeFileSync('output/output-buy.json', JSON.stringify(order, null, 2));
+    order.fee_list.forEach((fee) => this.Send(fee.currency, fee.cost));
     console.log(this.States());
   }
 
@@ -29,8 +29,7 @@ extends Wallet {
     const order = await this.exchange.MarketLongClose(symbol, this.Get(market.base));
     this.Send(market.base, order.amount);
     this.Receive(market.quote, order.cost);
-    order.trades.forEach((trade) => this.Send(trade.fee.currency, trade.fee.cost));
-    fs.writeFileSync('output/output-sell.json', JSON.stringify(order, null, 2));
+    order.fee_list.forEach((fee) => this.Send(fee.currency, fee.cost));
     console.log(this.States());
   }
 }

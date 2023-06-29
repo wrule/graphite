@@ -8,8 +8,8 @@ interface OrderX extends Order {
 export
 interface OKX {
   Exchange: okex5,
-  MarketLongOpen(symbol: string, funds: number): Promise<Order>;
-  MarketLongClose(symbol: string, assets: number): Promise<Order>;
+  MarketLongOpen(symbol: string, funds: number): Promise<OrderX>;
+  MarketLongClose(symbol: string, assets: number): Promise<OrderX>;
 }
 
 // export { BinanceSpot, CreateBinanceSpot } from './spot';
