@@ -1,20 +1,34 @@
 import { binance } from 'ccxt';
-import { ExchangeX } from '..';
+import { ExchangeX, OrderX } from '..';
 
 export
 class BinanceSpot implements ExchangeX {
   public constructor(public readonly Exchange: binance) { }
 
-  public MarketLongOpen(symbol: string, funds: number) {
+  public async MarketLongOpen(symbol: string, funds: number) {
     const amount = this.Exchange.costToPrecision(symbol, funds);
-    return this.Exchange.createMarketBuyOrder(symbol, amount, {
+    const start_time = Number(new Date());
+    const order = await this.Exchange.createMarketBuyOrder(symbol, amount, {
       quoteOrderQty: amount,
     });
+    const end_time = Number(new Date());
+    return {
+      ...order,
+      start_time, end_time,
+      fee_list: [],
+    } as OrderX;
   }
 
-  public MarketLongClose(symbol: string, assets: number) {
+  public async MarketLongClose(symbol: string, assets: number) {
     const amount = this.Exchange.amountToPrecision(symbol, assets);
-    return this.Exchange.createMarketSellOrder(symbol, amount);
+    const start_time = Number(new Date());
+    const order = await this.Exchange.createMarketSellOrder(symbol, amount);
+    const end_time = Number(new Date());
+    return {
+      ...order,
+      start_time, end_time,
+      fee_list: [],
+    } as OrderX;
   }
 }
 
