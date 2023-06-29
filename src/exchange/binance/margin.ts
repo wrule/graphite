@@ -1,8 +1,8 @@
 import { binance } from 'ccxt';
-import { Binance } from '.';
+import { ExchangeX } from '..';
 
 export
-class BinanceMargin implements Binance {
+class BinanceMargin implements ExchangeX {
   public constructor(public readonly Exchange: binance) { }
 
   public MarketLongOpen(symbol: string, funds: number) {

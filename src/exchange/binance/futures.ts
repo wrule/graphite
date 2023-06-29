@@ -1,8 +1,8 @@
 import { binance } from 'ccxt';
-import { Binance } from '.';
+import { ExchangeX } from '..';
 
 export
-class BinanceFutures implements Binance {
+class BinanceFutures implements ExchangeX {
   public constructor(public readonly Exchange: binance) { }
 
   private async getLastAskPrice(symbol: string) {
