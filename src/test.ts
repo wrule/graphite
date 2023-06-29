@@ -9,7 +9,8 @@ async function main() {
   const spot = await CreateOKXSpot(secret.exchange);
   const wallet = new FullWallet(spot, { USDT: 20 });
   await wallet.OpenFull('ETH/USDT');
-  await wallet.CloseFull('ETH/USDT');
+  const order = await wallet.CloseFull('ETH/USDT');
+  console.log(order.end_time - order.start_time);
 }
 
 main();
