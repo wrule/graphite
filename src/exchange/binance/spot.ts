@@ -15,7 +15,7 @@ class BinanceSpot implements ExchangeX {
     return {
       ...order,
       start_time, end_time,
-      fee_list: [],
+      fee_list: order.trades.map((trade) => trade.fee),
     } as OrderX;
   }
 
@@ -27,7 +27,7 @@ class BinanceSpot implements ExchangeX {
     return {
       ...order,
       start_time, end_time,
-      fee_list: [],
+      fee_list: order.trades.map((trade) => trade.fee),
     } as OrderX;
   }
 }
