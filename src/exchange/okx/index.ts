@@ -1,8 +1,8 @@
-import { Order, binance } from 'ccxt';
+import { Order, okex5 } from 'ccxt';
 
 export
 interface OKX {
-  Exchange: binance,
+  Exchange: okex5,
   MarketLongOpen(symbol: string, funds: number): Promise<Order>;
   MarketLongClose(symbol: string, assets: number): Promise<Order>;
 }
