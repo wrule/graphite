@@ -1,4 +1,5 @@
-import { Order, okex5 } from 'ccxt';
+import { okex5 } from 'ccxt';
+import { OrderX } from '..';
 
 export
 interface OKX {
