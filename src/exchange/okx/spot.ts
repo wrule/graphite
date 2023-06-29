@@ -5,16 +5,20 @@ export
 class OKXSpot implements OKX {
   public constructor(public readonly Exchange: okex5) { }
 
-  public MarketLongOpen(symbol: string, funds: number) {
+  public async MarketLongOpen(symbol: string, funds: number) {
     const amount = this.Exchange.costToPrecision(symbol, funds);
-    return this.Exchange.createMarketBuyOrder(symbol, amount, {
+    const order = await this.Exchange.createMarketBuyOrder(symbol, amount, {
       tgtCcy: 'quote_ccy',
     });
+    const order_detail = await this.Exchange.fetchOrder(order.id, symbol);
+    return order_detail;
   }
 
-  public MarketLongClose(symbol: string, assets: number) {
+  public async MarketLongClose(symbol: string, assets: number) {
     const amount = this.Exchange.amountToPrecision(symbol, assets);
-    return this.Exchange.createMarketSellOrder(symbol, amount);
+    const order = await this.Exchange.createMarketSellOrder(symbol, amount);
+    const order_detail = await this.Exchange.fetchOrder(order.id, symbol);
+    return order_detail;
   }
 }
 
