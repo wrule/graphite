@@ -8,7 +8,7 @@ class OKXSpot implements OKX {
   public MarketLongOpen(symbol: string, funds: number) {
     const amount = this.Exchange.costToPrecision(symbol, funds);
     return this.Exchange.createMarketBuyOrder(symbol, amount, {
-      quoteOrderQty: amount,
+      tgtCcy: 'quote_ccy',
     });
   }
 
