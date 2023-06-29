@@ -21,6 +21,7 @@ extends Wallet {
     this.Receive(market.base, order.amount);
     order.fee_list.forEach((fee) => this.Send(fee.currency, fee.cost));
     console.log(this.States());
+    return order;
   }
 
   public async CloseFull(symbol: string) {
@@ -31,5 +32,6 @@ extends Wallet {
     this.Receive(market.quote, order.cost);
     order.fee_list.forEach((fee) => this.Send(fee.currency, fee.cost));
     console.log(this.States());
+    return order;
   }
 }
