@@ -14,9 +14,7 @@ class OKXSpot implements OKX {
       tgtCcy: 'quote_ccy',
     });
     const end_time = Number(new Date());
-    fs.writeFileSync('output/output-okx-buy.json', JSON.stringify(order, null, 2));
     const order_detail = await this.Exchange.fetchOrder(order.id, symbol);
-    fs.writeFileSync('output/output-okx-buy-detail.json', JSON.stringify(order_detail, null, 2));
     return {
       ...order_detail,
       start_time, end_time,
@@ -29,9 +27,7 @@ class OKXSpot implements OKX {
     const start_time = Number(new Date());
     const order = await this.Exchange.createMarketSellOrder(symbol, amount);
     const end_time = Number(new Date());
-    fs.writeFileSync('output/output-okx-sell.json', JSON.stringify(order, null, 2));
     const order_detail = await this.Exchange.fetchOrder(order.id, symbol);
-    fs.writeFileSync('output/output-okx-sell-detail.json', JSON.stringify(order_detail, null, 2));
     return {
       ...order_detail,
       start_time, end_time,
