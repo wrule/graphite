@@ -1,4 +1,4 @@
-import { Order, okex5 } from 'ccxt';
+import { Exchange, Order, okex5, ExchangeError } from 'ccxt';
 import { OKX } from '.';
 import { OrderX } from '..';
 import { CopyError } from '../../utils';
@@ -22,20 +22,36 @@ class OKXSpot implements OKX {
     } as OrderX;
   }
 
-  public async MarketLongClose(symbol: string, assets: number) {
-    const amount = this.Exchange.amountToPrecision(symbol, assets);
-    const start_time = Number(new Date());
-    const order = await this.Exchange.createMarketSellOrder(symbol, amount);
-    const end_time = Number(new Date());
-    let order_detail: Order;
+  private fetchOrder(id: string, symbol?: string | undefined, params?: { } | undefined) {
     try {
-      order_detail = await this.Exchange.fetchOrder(order.id, symbol);
+      return this.Exchange.fetchOrder(id, symbol, params);
     } catch (e) { throw CopyError(e); }
-    return {
-      ...order_detail,
-      start_time, end_time,
-      fee_list: (order_detail as any).fees || [],
-    } as OrderX;
+  }
+
+  private async fetchFreeBalance(currency: string) {
+    try {
+      const a = await this.Exchange.fetchFreeBalance();
+      return a[currency];
+    } catch (e) { throw CopyError(e); }
+  }
+
+  public async MarketLongClose(symbol: string, assets: number, sync = false) {
+    try {
+      const amount = this.Exchange.amountToPrecision(symbol, assets);
+      const start_time = Number(new Date());
+      const order = await this.Exchange.createMarketSellOrder(symbol, amount);
+      const end_time = Number(new Date());
+      const order_detail = await this.fetchOrder(order.id, symbol);
+      return {
+        ...order_detail,
+        start_time, end_time,
+        fee_list: (order_detail as any).fees || [],
+      } as OrderX;
+    } catch (e) {
+      if (!sync && e instanceof ExchangeError)
+        return await this.MarketLongClose(symbol, assets, true);
+      throw e;
+    }
   }
 }
 
