@@ -35,14 +35,15 @@ class OKXSpot implements OKX {
     } catch (e) { throw CopyError(e); }
   }
 
+  private async syncBalance(symbol: string, amount: number, type: 'base' | 'quote') {
+    const market: Market = this.Exchange.market(symbol);
+    const balance = await this.fetchFreeBalanceByCurrency(market[type]);
+    return amount > balance ? balance : amount;
+  }
+
   public async MarketLongClose(symbol: string, assets: number, sync = false) {
     try {
-      let amount = assets;
-      if (sync) {
-        const market: Market = this.Exchange.market(symbol);
-        const real_amount = await this.fetchFreeBalanceByCurrency(market.base);
-        if (amount > real_amount) amount = real_amount;
-      }
+      let amount = sync ? await this.syncBalance(symbol, assets, 'base') : assets;
       amount = this.Exchange.amountToPrecision(symbol, amount);
       const start_time = Number(new Date());
       const order = await this.Exchange.createMarketSellOrder(symbol, amount);
