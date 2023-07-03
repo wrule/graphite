@@ -11,4 +11,6 @@ interface OrderX extends Order {
 export
 abstract class Trader {
   public abstract Exchange: Exchange;
+  public abstract MarketOpen(symbol: string, funds: number): Promise<OrderX>;
+  public abstract MarketClose(symbol: string, assets: number): Promise<OrderX>;
 }

@@ -4,9 +4,6 @@ import { OrderX, Trader } from '.';
 
 export
 abstract class SpotTrader extends Trader {
-  public abstract MarketLongOpen(symbol: string, funds: number): Promise<OrderX>;
-  public abstract MarketLongClose(symbol: string, assets: number): Promise<OrderX>;
-
   protected async fetchFreeBalanceByCurrency(currency: string) {
     try {
       const balance: any = await this.Exchange.fetchFreeBalance();

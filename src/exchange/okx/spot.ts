@@ -3,10 +3,10 @@ import { OrderX } from '..';
 import { SpotTrader } from '../spot';
 
 export
-class OKXSpot extends SpotTrader {
+class OKXSpotTrader extends SpotTrader {
   public constructor(public readonly Exchange: okex5) { super() }
 
-  public async MarketLongOpen(
+  public async MarketOpen(
     symbol: string,
     funds: number,
     sync = false,
@@ -27,7 +27,7 @@ class OKXSpot extends SpotTrader {
     } catch (e) {
       if (!sync && e instanceof ExchangeError) {
         const [order] = await Promise.all([
-          this.MarketLongOpen(symbol, funds, true, start_time),
+          this.MarketOpen(symbol, funds, true, start_time),
           // 发送异常消息
         ]);
         return order;
@@ -36,7 +36,7 @@ class OKXSpot extends SpotTrader {
     }
   }
 
-  public async MarketLongClose(
+  public async MarketClose(
     symbol: string,
     assets: number,
     sync = false,
@@ -55,7 +55,7 @@ class OKXSpot extends SpotTrader {
     } catch (e) {
       if (!sync && e instanceof ExchangeError) {
         const [order] = await Promise.all([
-          this.MarketLongClose(symbol, assets, true, start_time),
+          this.MarketClose(symbol, assets, true, start_time),
           // 发送异常消息
         ]);
         return order;
@@ -67,7 +67,7 @@ class OKXSpot extends SpotTrader {
 
 export
 async function CreateOKXSpot(config: any) {
-  const exchange = new OKXSpot(new okex5({ ...config }));
+  const exchange = new OKXSpotTrader(new okex5({ ...config }));
   await exchange.Exchange.loadMarkets();
   return exchange;
 }
