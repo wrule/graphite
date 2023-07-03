@@ -1,6 +1,6 @@
 import { Market } from 'ccxt';
-import { CopyError } from '../utils';
 import { ExchangeX } from '.';
+import { CopyError } from '../utils';
 
 export
 abstract class SpotExchange extends ExchangeX {
