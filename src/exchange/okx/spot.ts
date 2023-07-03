@@ -1,7 +1,7 @@
-import fs from 'fs';
 import { Order, okex5 } from 'ccxt';
 import { OKX } from '.';
 import { OrderX } from '..';
+import { CopyError } from '../../utils';
 
 export
 class OKXSpot implements OKX {
@@ -30,9 +30,7 @@ class OKXSpot implements OKX {
     let order_detail: Order;
     try {
       order_detail = await this.Exchange.fetchOrder(order.id, symbol);
-    } catch (e) {
-      throw '';
-    }
+    } catch (e) { throw CopyError(e); }
     return {
       ...order_detail,
       start_time, end_time,
