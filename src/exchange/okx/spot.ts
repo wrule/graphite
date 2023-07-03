@@ -28,10 +28,10 @@ class OKXSpot implements OKX {
     } catch (e) { throw CopyError(e); }
   }
 
-  private async fetchFreeBalance(currency: string) {
+  public async fetchFreeBalanceByCurrency(currency: string) {
     try {
-      const a = await this.Exchange.fetchFreeBalance();
-      return a[currency];
+      const balance: any = await this.Exchange.fetchFreeBalance({ ccy: currency });
+      return (balance[currency] ?? 0) as number;
     } catch (e) { throw CopyError(e); }
   }
 
