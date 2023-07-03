@@ -55,9 +55,13 @@ class OKXSpot implements OKX {
     return amount > balance ? balance : amount;
   }
 
-  public async MarketLongClose(symbol: string, assets: number, sync = false): Promise<OrderX> {
+  public async MarketLongClose(
+    symbol: string,
+    assets: number,
+    sync = false,
+    start_time = Number(new Date()),
+  ): Promise<OrderX> {
     try {
-      const start_time = Number(new Date());
       let amount = sync ? await this.syncBalance(symbol, assets, 'base') : assets;
       amount = this.Exchange.amountToPrecision(symbol, amount);
       const order = await this.Exchange.createMarketSellOrder(symbol, amount);
@@ -68,8 +72,13 @@ class OKXSpot implements OKX {
         start_time, end_time, fee_list: (order_detail as any).fees || [],
       };
     } catch (e) {
-      if (!sync && e instanceof ExchangeError)
-        return await this.MarketLongClose(symbol, assets, true);
+      if (!sync && e instanceof ExchangeError) {
+        const [order] = await Promise.all([
+          this.MarketLongClose(symbol, assets, true, start_time),
+          // 发送异常消息
+        ]);
+        return order;
+      }
       throw e;
     }
   }
