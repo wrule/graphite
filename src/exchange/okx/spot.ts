@@ -7,18 +7,26 @@ export
 class OKXSpot implements OKX {
   public constructor(public readonly Exchange: okex5) { }
 
-  public async MarketLongOpen(symbol: string, funds: number, sync = false): Promise<OrderX> {
+  public async MarketLongOpen(
+    symbol: string,
+    funds: number,
+    sync = false,
+    start_time = Number(new Date())): Promise<OrderX> {
     try {
-      const start_time = Number(new Date());
       let amount = sync ? await this.syncBalance(symbol, funds, 'quote') : funds;
       amount = this.Exchange.costToPrecision(symbol, amount);
-      const order = await this.Exchange.createMarketBuyOrder(symbol, amount, { tgtCcy: 'quote_ccy' });
+      const order = await this.Exchange.createMarketBuyOrder(symbol, amount, {
+        tgtCcy: 'quote_ccy',
+      });
       const end_time = Number(new Date());
       const order_detail = await this.fetchOrder(order.id, symbol);
-      return { ...order_detail, start_time, end_time, fee_list: (order_detail as any).fees || [] };
+      return {
+        ...order_detail,
+        start_time, end_time, fee_list: (order_detail as any).fees || [],
+      };
     } catch (e) {
       if (!sync && e instanceof ExchangeError)
-        return await this.MarketLongOpen(symbol, funds, true);
+        return await this.MarketLongOpen(symbol, funds, true, start_time);
       throw e;
     }
   }
