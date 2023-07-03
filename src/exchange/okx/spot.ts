@@ -10,6 +10,7 @@ class OKXSpotExchange extends SpotExchange {
   protected async fetchFreeBalanceByCurrency(currency: string) {
     try {
       const balance: any = await this.Exchange.fetchFreeBalance({ ccy: currency });
+      console.log(1234, balance);
       return (balance[currency] ?? 0) as number;
     } catch (e) { throw CopyError(e); }
   }

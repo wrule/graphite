@@ -1,5 +1,4 @@
-import fs from 'fs';
-import { okex5 } from 'ccxt';
+import 'global-agent/bootstrap';
 import { CreateOKXSpotExchange } from './exchange/okx/spot';
 import { FullTrader } from './trader/full_trader';
 
