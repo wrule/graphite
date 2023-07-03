@@ -1,10 +1,18 @@
 import { okex5, ExchangeError } from 'ccxt';
 import { OrderX } from '..';
 import { SpotExchange } from '../spot';
+import { CopyError } from '../../utils';
 
 export
 class OKXSpotExchange extends SpotExchange {
   public constructor(public readonly Exchange: okex5) { super() }
+
+  protected async fetchFreeBalanceByCurrency(currency: string) {
+    try {
+      const balance: any = await this.Exchange.fetchFreeBalance({ ccy: currency });
+      return (balance[currency] ?? 0) as number;
+    } catch (e) { throw CopyError(e); }
+  }
 
   public async MarketOpen(
     symbol: string,
