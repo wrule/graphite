@@ -1,8 +1,9 @@
 import { okex5, ExchangeError } from 'ccxt';
-import { ExchangeX, OrderX } from '..';
+import { OrderX } from '..';
+import { SpotTrader } from '../spot';
 
 export
-class OKXSpot extends ExchangeX {
+class OKXSpot extends SpotTrader {
   public constructor(public readonly Exchange: okex5) { super() }
 
   public async MarketLongOpen(
