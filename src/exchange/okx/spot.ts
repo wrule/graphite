@@ -11,7 +11,8 @@ class OKXSpot implements OKX {
     symbol: string,
     funds: number,
     sync = false,
-    start_time = Number(new Date())): Promise<OrderX> {
+    start_time = Number(new Date()),
+  ): Promise<OrderX> {
     try {
       let amount = sync ? await this.syncBalance(symbol, funds, 'quote') : funds;
       amount = this.Exchange.costToPrecision(symbol, amount);
