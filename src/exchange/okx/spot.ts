@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { okex5 } from 'ccxt';
+import { Order, okex5 } from 'ccxt';
 import { OKX } from '.';
 import { OrderX } from '..';
 
@@ -27,7 +27,12 @@ class OKXSpot implements OKX {
     const start_time = Number(new Date());
     const order = await this.Exchange.createMarketSellOrder(symbol, amount);
     const end_time = Number(new Date());
-    const order_detail = await this.Exchange.fetchOrder(order.id, symbol);
+    let order_detail: Order;
+    try {
+      order_detail = await this.Exchange.fetchOrder(order.id, symbol);
+    } catch (e) {
+      throw '';
+    }
     return {
       ...order_detail,
       start_time, end_time,
