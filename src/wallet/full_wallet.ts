@@ -1,11 +1,11 @@
 import { Wallet } from '.';
-import { Trader } from '../exchange';
+import { ExchangeX } from '../exchange';
 
 export
 class FullWallet
 extends Wallet {
   public constructor(
-    private trader: Trader,
+    private exchange: ExchangeX,
     params: { [name: string]: number } = { },
   ) {
     super(params);
@@ -13,8 +13,8 @@ extends Wallet {
 
   public async MarketOpenFull(symbol: string) {
     console.log(this.States());
-    const market = this.trader.Exchange.market(symbol);
-    const order = await this.trader.MarketOpen(symbol, this.Get(market.quote));
+    const market = this.exchange.Exchange.market(symbol);
+    const order = await this.exchange.MarketOpen(symbol, this.Get(market.quote));
     this.Send(market.quote, order.cost);
     this.Receive(market.base, order.amount);
     order.fee_list.forEach((fee) => this.Send(fee.currency, fee.cost));
@@ -24,8 +24,8 @@ extends Wallet {
 
   public async MarketCloseFull(symbol: string) {
     console.log(this.States());
-    const market = this.trader.Exchange.market(symbol);
-    const order = await this.trader.MarketClose(symbol, this.Get(market.base));
+    const market = this.exchange.Exchange.market(symbol);
+    const order = await this.exchange.MarketClose(symbol, this.Get(market.base));
     this.Send(market.base, order.amount);
     this.Receive(market.quote, order.cost);
     order.fee_list.forEach((fee) => this.Send(fee.currency, fee.cost));

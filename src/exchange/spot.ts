@@ -1,9 +1,9 @@
 import { Market } from 'ccxt';
 import { CopyError } from '../utils';
-import { Trader } from '.';
+import { ExchangeX } from '.';
 
 export
-abstract class SpotTrader extends Trader {
+abstract class SpotExchange extends ExchangeX {
   protected async fetchFreeBalanceByCurrency(currency: string) {
     try {
       const balance: any = await this.Exchange.fetchFreeBalance();
