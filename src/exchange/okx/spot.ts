@@ -51,8 +51,7 @@ class OKXSpot implements OKX {
       const order_detail = await this.fetchOrder(order.id, symbol);
       return {
         ...order_detail,
-        start_time, end_time,
-        fee_list: (order_detail as any).fees || [],
+        start_time, end_time, fee_list: (order_detail as any).fees || [],
       };
     } catch (e) {
       if (!sync && e instanceof ExchangeError)
