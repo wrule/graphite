@@ -1,40 +1,71 @@
-import { binance } from 'ccxt';
-import { ExchangeX, OrderX } from '..';
+import { binance, ExchangeError } from 'ccxt';
+import { OrderX } from '..';
+import { SpotExchange } from '../spot';
 
 export
-class BinanceSpot implements ExchangeX {
-  public constructor(public readonly Exchange: binance) { }
+class BinanceSpotExchange extends SpotExchange {
+  public constructor(public readonly Exchange: binance) { super() }
 
-  public async MarketLongOpen(symbol: string, funds: number) {
-    const amount = this.Exchange.costToPrecision(symbol, funds);
-    const start_time = Number(new Date());
-    const order = await this.Exchange.createMarketBuyOrder(symbol, amount, {
-      quoteOrderQty: amount,
-    });
-    const end_time = Number(new Date());
-    return {
-      ...order,
-      start_time, end_time,
-      fee_list: order.trades.map((trade) => trade.fee),
-    } as OrderX;
+  public async MarketOpen(
+    symbol: string,
+    funds: number,
+    sync = false,
+    start_time = Number(new Date()),
+  ): Promise<OrderX> {
+    try {
+      let amount = sync ? await this.syncBalance(symbol, funds, 'quote') : funds;
+      amount = this.Exchange.costToPrecision(symbol, amount);
+      const order = await this.Exchange.createMarketBuyOrder(symbol, amount, {
+        quoteOrderQty: amount,
+      });
+      const end_time = Number(new Date());
+      return {
+        ...order,
+        start_time, end_time, fee_list: order.trades.map((trade) => trade.fee),
+      };
+    } catch (e) {
+      if (!sync && e instanceof ExchangeError) {
+        const [order] = await Promise.all([
+          this.MarketOpen(symbol, funds, true, start_time),
+          // 发送异常消息
+        ]);
+        return order;
+      }
+      throw e;
+    }
   }
 
-  public async MarketLongClose(symbol: string, assets: number) {
-    const amount = this.Exchange.amountToPrecision(symbol, assets);
-    const start_time = Number(new Date());
-    const order = await this.Exchange.createMarketSellOrder(symbol, amount);
-    const end_time = Number(new Date());
-    return {
-      ...order,
-      start_time, end_time,
-      fee_list: order.trades.map((trade) => trade.fee),
-    } as OrderX;
+  public async MarketClose(
+    symbol: string,
+    assets: number,
+    sync = false,
+    start_time = Number(new Date()),
+  ): Promise<OrderX> {
+    try {
+      let amount = sync ? await this.syncBalance(symbol, assets, 'base') : assets;
+      amount = this.Exchange.amountToPrecision(symbol, amount);
+      const order = await this.Exchange.createMarketSellOrder(symbol, amount);
+      const end_time = Number(new Date());
+      return {
+        ...order,
+        start_time, end_time, fee_list: order.trades.map((trade) => trade.fee),
+      };
+    } catch (e) {
+      if (!sync && e instanceof ExchangeError) {
+        const [order] = await Promise.all([
+          this.MarketClose(symbol, assets, true, start_time),
+          // 发送异常消息
+        ]);
+        return order;
+      }
+      throw e;
+    }
   }
 }
 
 export
-async function CreateBinanceSpot(config: any) {
-  const exchange = new BinanceSpot(new binance({ ...config }));
+async function CreateBinanceSpotExchange(config: any) {
+  const exchange = new BinanceSpotExchange(new binance({ ...config }));
   await exchange.Exchange.loadMarkets();
   return exchange;
 }
