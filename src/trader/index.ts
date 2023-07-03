@@ -1,6 +1,6 @@
 
 export
-class Wallet {
+class Trader {
   public constructor(params: { [name: string]: number } = { }) {
     this.wallet = new Map<string, number>(Object.entries(params));
   }

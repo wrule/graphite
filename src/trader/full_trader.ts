@@ -1,9 +1,9 @@
-import { Wallet } from '.';
+import { Trader } from '.';
 import { ExchangeX } from '../exchange';
 
 export
-class FullWallet
-extends Wallet {
+class FullTrader
+extends Trader {
   public constructor(
     private exchange: ExchangeX,
     params: { [name: string]: number } = { },
