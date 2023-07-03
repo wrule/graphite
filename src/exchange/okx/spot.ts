@@ -1,11 +1,9 @@
-import { Exchange, Order, okex5, ExchangeError, Market } from 'ccxt';
-import { OKX } from '.';
-import { OrderX } from '..';
-import { CopyError } from '../../utils';
+import { okex5, ExchangeError } from 'ccxt';
+import { ExchangeX, OrderX } from '..';
 
 export
-class OKXSpot implements OKX {
-  public constructor(public readonly Exchange: okex5) { }
+class OKXSpot extends ExchangeX {
+  public constructor(public readonly Exchange: okex5) { super() }
 
   public async MarketLongOpen(
     symbol: string,
@@ -35,25 +33,6 @@ class OKXSpot implements OKX {
       }
       throw e;
     }
-  }
-
-  private fetchOrder(id: string, symbol?: string | undefined, params?: { } | undefined) {
-    try {
-      return this.Exchange.fetchOrder(id, symbol, params);
-    } catch (e) { throw CopyError(e); }
-  }
-
-  public async fetchFreeBalanceByCurrency(currency: string) {
-    try {
-      const balance: any = await this.Exchange.fetchFreeBalance({ ccy: currency });
-      return (balance[currency] ?? 0) as number;
-    } catch (e) { throw CopyError(e); }
-  }
-
-  private async syncBalance(symbol: string, amount: number, type: 'base' | 'quote') {
-    const market: Market = this.Exchange.market(symbol);
-    const balance = await this.fetchFreeBalanceByCurrency(market[type]);
-    return amount > balance ? balance : amount;
   }
 
   public async MarketLongClose(
