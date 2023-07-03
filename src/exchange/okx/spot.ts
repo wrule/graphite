@@ -1,4 +1,4 @@
-import { Exchange, Order, okex5, ExchangeError } from 'ccxt';
+import { Exchange, Order, okex5, ExchangeError, Market } from 'ccxt';
 import { OKX } from '.';
 import { OrderX } from '..';
 import { CopyError } from '../../utils';
@@ -37,7 +37,13 @@ class OKXSpot implements OKX {
 
   public async MarketLongClose(symbol: string, assets: number, sync = false) {
     try {
-      const amount = this.Exchange.amountToPrecision(symbol, assets);
+      let amount = assets;
+      if (sync) {
+        const market: Market = this.Exchange.market(symbol);
+        const real_amount = await this.fetchFreeBalanceByCurrency(market.base);
+        if (amount > real_amount) amount = real_amount;
+      }
+      amount = this.Exchange.amountToPrecision(symbol, amount);
       const start_time = Number(new Date());
       const order = await this.Exchange.createMarketSellOrder(symbol, amount);
       const end_time = Number(new Date());
