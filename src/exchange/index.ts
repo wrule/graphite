@@ -1,5 +1,4 @@
-import { Exchange, Market, Order } from 'ccxt';
-import { CopyError } from '../utils';
+import { Exchange, Order } from 'ccxt';
 
 export
 interface OrderX extends Order {
