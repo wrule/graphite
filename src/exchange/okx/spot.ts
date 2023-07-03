@@ -25,8 +25,13 @@ class OKXSpot implements OKX {
         start_time, end_time, fee_list: (order_detail as any).fees || [],
       };
     } catch (e) {
-      if (!sync && e instanceof ExchangeError)
-        return await this.MarketLongOpen(symbol, funds, true, start_time);
+      if (!sync && e instanceof ExchangeError) {
+        const [order] = await Promise.all([
+          this.MarketLongOpen(symbol, funds, true, start_time),
+          // 发送异常消息
+        ]);
+        return order;
+      }
       throw e;
     }
   }
