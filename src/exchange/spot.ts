@@ -1,6 +1,6 @@
 import { Market } from 'ccxt';
 import { CopyError } from '../utils';
-import { OrderX, Trader } from '.';
+import { Trader } from '.';
 
 export
 abstract class SpotTrader extends Trader {
