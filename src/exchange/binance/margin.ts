@@ -1,11 +1,12 @@
 import { binance } from 'ccxt';
-import { ExchangeX, OrderX } from '..';
+import { OrderX } from '..';
+import { Margin } from '../margin';
 
 export
-class BinanceMargin implements ExchangeX {
-  public constructor(public readonly Exchange: binance) { }
+class BinanceMargin extends Margin {
+  public constructor(public readonly Exchange: binance) { super() }
 
-  public async MarketLongOpen(symbol: string, funds: number) {
+  public async MarketOpen(symbol: string, funds: number) {
     const amount = this.Exchange.costToPrecision(symbol, funds);
     const start_time = Number(new Date());
     const order = await this.Exchange.createMarketBuyOrder(symbol, amount, {
@@ -20,7 +21,7 @@ class BinanceMargin implements ExchangeX {
     } as OrderX;
   }
 
-  public async MarketLongClose(symbol: string, assets: number) {
+  public async MarketClose(symbol: string, assets: number) {
     const amount = this.Exchange.amountToPrecision(symbol, assets);
     const start_time = Number(new Date());
     const order = await this.Exchange.createMarketSellOrder(symbol, amount, {
