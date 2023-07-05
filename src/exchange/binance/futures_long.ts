@@ -2,7 +2,7 @@ import { binance } from 'ccxt';
 import { FuturesExchange } from '../futures';
 
 export
-class BinanceFuturesExchange extends FuturesExchange {
+class BinanceFuturesLong extends FuturesExchange {
   public constructor(public readonly Exchange: binance) { super() }
 
   private async getLastAskPrice(symbol: string) {
@@ -54,8 +54,8 @@ class BinanceFuturesExchange extends FuturesExchange {
 }
 
 export
-async function CreateBinanceFutures(config: any) {
-  const exchange = new BinanceFuturesExchange(new binance({
+async function CreateBinanceFuturesLong(config: any) {
+  const exchange = new BinanceFuturesLong(new binance({
     ...config,
     options: {
       defaultType: 'future',
