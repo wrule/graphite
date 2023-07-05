@@ -7,8 +7,8 @@ class BinanceMargin extends Margin {
   public constructor(public readonly Exchange: binance) { super() }
 
   public async MarketOpen(symbol: string, funds: number) {
-    const amount = this.Exchange.costToPrecision(symbol, funds);
     const start_time = Number(new Date());
+    const amount = this.Exchange.costToPrecision(symbol, funds);
     const order = await this.Exchange.createMarketBuyOrder(symbol, amount, {
       quoteOrderQty: amount,
       type: 'margin',
@@ -22,8 +22,8 @@ class BinanceMargin extends Margin {
   }
 
   public async MarketClose(symbol: string, assets: number) {
-    const amount = this.Exchange.amountToPrecision(symbol, assets);
     const start_time = Number(new Date());
+    const amount = this.Exchange.amountToPrecision(symbol, assets);
     const order = await this.Exchange.createMarketSellOrder(symbol, amount, {
       type: 'margin',
     });
