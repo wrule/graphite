@@ -3,7 +3,7 @@ import { OrderX } from '..';
 import { SpotExchange } from '../spot';
 
 export
-class BinanceSpotExchange extends SpotExchange {
+class BinanceSpot extends SpotExchange {
   public constructor(public readonly Exchange: binance) { super() }
 
   public async MarketOpen(
@@ -64,8 +64,8 @@ class BinanceSpotExchange extends SpotExchange {
 }
 
 export
-async function CreateBinanceSpotExchange(config: any) {
-  const exchange = new BinanceSpotExchange(new binance({ ...config }));
+async function CreateBinanceSpot(config: any) {
+  const exchange = new BinanceSpot(new binance({ ...config }));
   await exchange.Exchange.loadMarkets();
   return exchange;
 }
