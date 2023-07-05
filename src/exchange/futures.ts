@@ -1,11 +1,9 @@
 import { ExchangeX } from '.';
-import { CopyError } from '../utils';
 
 export
 abstract class FuturesExchange extends ExchangeX {
-  protected fetchOrder(id: string, symbol?: string, params?: { }) {
-    try {
-      return this.Exchange.fetchOrder(id, symbol, params);
-    } catch (e) { throw CopyError(e); }
+  protected async getLastAskPrice(symbol: string) {
+    const book = await this.Exchange.fetchOrderBook(symbol, 10);
+    return book.asks[0][0];
   }
 }

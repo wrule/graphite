@@ -5,11 +5,6 @@ export
 class BinanceFuturesShort extends FuturesExchange {
   public constructor(public readonly Exchange: binance) { super() }
 
-  private async getLastAskPrice(symbol: string) {
-    const book = await this.Exchange.fetchOrderBook(symbol, 10);
-    return book.asks[0][0];
-  }
-
   public async MarketOpen(symbol: string, funds: number) {
     const start_time = Number(new Date());
     const price = await this.getLastAskPrice(symbol);
