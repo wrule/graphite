@@ -14,8 +14,8 @@ class BinanceFuturesShort extends FuturesExchange {
     const start_time = Number(new Date());
     const price = await this.getLastAskPrice(symbol);
     const amount = this.Exchange.amountToPrecision(symbol, funds / price);
-    const order = await this.Exchange.createMarketBuyOrder(symbol, amount, {
-      positionSide: 'LONG',
+    const order = await this.Exchange.createMarketSellOrder(symbol, amount, {
+      positionSide: 'SHORT',
     });
     const end_time = Number(new Date());
     return {
@@ -27,8 +27,8 @@ class BinanceFuturesShort extends FuturesExchange {
   public async MarketClose(symbol: string, assets: number) {
     const start_time = Number(new Date());
     const amount = this.Exchange.amountToPrecision(symbol, assets);
-    const order = await this.Exchange.createMarketSellOrder(symbol, amount, {
-      positionSide: 'LONG',
+    const order = await this.Exchange.createMarketBuyOrder(symbol, amount, {
+      positionSide: 'SHORT',
     });
     const end_time = Number(new Date());
     return {
@@ -36,21 +36,6 @@ class BinanceFuturesShort extends FuturesExchange {
       start_time, end_time, fee_list: order.trades.map((trade) => trade.fee),
     };
   }
-
-  // public async MarketShortOpen(symbol: string, funds: number) {
-  //   const price = await this.getLastAskPrice(symbol);
-  //   const amount = this.Exchange.amountToPrecision(symbol, funds / price);
-  //   return this.Exchange.createMarketSellOrder(symbol, amount, {
-  //     positionSide: 'SHORT',
-  //   });
-  // }
-
-  // public async MarketShortClose(symbol: string, assets: number) {
-  //   const amount = this.Exchange.amountToPrecision(symbol, assets);
-  //   return this.Exchange.createMarketBuyOrder(symbol, amount, {
-  //     positionSide: 'SHORT',
-  //   });
-  // }
 }
 
 export
