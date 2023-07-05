@@ -54,8 +54,8 @@ class BinanceFuturesShort extends FuturesExchange {
 }
 
 export
-async function CreateBinanceFuturesLong(config: any) {
-  const exchange = new BinanceFuturesLong(new binance({
+async function CreateBinanceFuturesShort(config: any) {
+  const exchange = new BinanceFuturesShort(new binance({
     ...config,
     options: {
       defaultType: 'future',
