@@ -14,9 +14,10 @@ async function main() {
 
   // const spot = await CreateOKXSpotExchange(secret.exchange);
   const trader = new FullTrader(spot, { USDT: 20 });
-  await trader.MarketOpenFull('ETH/USDT');
-  const order = await trader.MarketCloseFull('ETH/USDT');
-  console.log(order.end_time - order.start_time);
+  const open_order = await trader.MarketOpenFull('ETH/USDT');
+  fs.writeFileSync('output/fbuy.json', JSON.stringify(open_order, null, 2));
+  const close_order = await trader.MarketCloseFull('ETH/USDT');
+  fs.writeFileSync('output/fsell.json', JSON.stringify(close_order, null, 2));
 }
 
 main();

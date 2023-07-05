@@ -24,7 +24,7 @@ class BinanceFuturesLong extends FuturesExchange {
     };
   }
 
-  public async MarketClose(symbol: string, assets: number) {
+  public async MarketClose(symbol: string, assets: number): Promise<OrderX> {
     const start_time = Number(new Date());
     const amount = this.Exchange.amountToPrecision(symbol, assets);
     const order = await this.Exchange.createMarketSellOrder(symbol, amount, {
