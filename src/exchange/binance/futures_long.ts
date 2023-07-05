@@ -7,8 +7,8 @@ class BinanceFuturesLong extends FuturesExchange {
 
   public async MarketOpen(symbol: string, funds: number) {
     const start_time = Number(new Date());
-    const price = await this.getLastAskPrice(symbol);
-    const amount = this.Exchange.amountToPrecision(symbol, funds / price);
+    const ticker = await this.getLastBookTicker(symbol);
+    const amount = this.Exchange.amountToPrecision(symbol, funds / ticker.ask1);
     const order = await this.Exchange.createMarketBuyOrder(symbol, amount, {
       positionSide: 'LONG',
     });
