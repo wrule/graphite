@@ -4,7 +4,10 @@ import { OrderX } from '..';
 
 export
 class BinanceSpot extends Spot {
-  public constructor(public readonly Exchange: binance) { super() }
+  public constructor(
+    public readonly Exchange: binance,
+    message?: (data?: any) => void,
+  ) { super(message) }
 
   public async MarketOpen(
     symbol: string,
@@ -27,7 +30,7 @@ class BinanceSpot extends Spot {
       if (!sync && e instanceof ExchangeError) {
         const [order] = await Promise.all([
           this.MarketOpen(symbol, funds, true, start_time),
-          // 发送异常消息
+          this.message?.(e),
         ]);
         return order;
       }
@@ -54,7 +57,7 @@ class BinanceSpot extends Spot {
       if (!sync && e instanceof ExchangeError) {
         const [order] = await Promise.all([
           this.MarketClose(symbol, assets, true, start_time),
-          // 发送异常消息
+          this.message?.(e),
         ]);
         return order;
       }

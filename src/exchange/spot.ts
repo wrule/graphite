@@ -4,7 +4,7 @@ import { CopyError } from '../utils';
 
 export
 abstract class Spot extends ExchangeX {
-  public constructor(private message?: (data?: any) => void) { super() }
+  public constructor(protected message?: (data?: any) => void) { super() }
 
   protected async fetchFreeBalanceByCurrency(currency: string) {
     try {
