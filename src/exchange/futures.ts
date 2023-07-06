@@ -1,7 +1,7 @@
 import { ExchangeX } from '.';
 
 export
-abstract class FuturesExchange extends ExchangeX {
+abstract class Futures extends ExchangeX {
   public async getLastBookTicker(symbol: string) {
     const book = await this.Exchange.fetchOrderBook(symbol, 10);
     return {
