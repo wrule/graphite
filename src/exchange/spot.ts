@@ -3,7 +3,7 @@ import { ExchangeX } from '.';
 import { CopyError } from '../utils';
 
 export
-abstract class SpotExchange extends ExchangeX {
+abstract class Spot extends ExchangeX {
   protected async fetchFreeBalanceByCurrency(currency: string) {
     try {
       const balance: any = await this.Exchange.fetchFreeBalance();

@@ -1,9 +1,9 @@
 import { binance, ExchangeError } from 'ccxt';
 import { OrderX } from '..';
-import { SpotExchange } from '../spot';
+import { Spot } from '../spot';
 
 export
-class BinanceSpot extends SpotExchange {
+class BinanceSpot extends Spot {
   public constructor(public readonly Exchange: binance) { super() }
 
   public async MarketOpen(
