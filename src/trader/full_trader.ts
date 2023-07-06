@@ -1,3 +1,4 @@
+// 2023年07月06日13:40:33
 import { Trader } from '.';
 import { ExchangeX } from '../exchange';
 
