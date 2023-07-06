@@ -1,6 +1,6 @@
 import { binance, ExchangeError } from 'ccxt';
-import { OrderX } from '..';
 import { Spot } from '../spot';
+import { OrderX } from '..';
 
 export
 class BinanceSpot extends Spot {
