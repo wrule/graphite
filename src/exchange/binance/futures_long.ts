@@ -1,9 +1,9 @@
 import { binance } from 'ccxt';
-import { FuturesExchange } from '../futures';
+import { Futures } from '../futures';
 import { OrderX } from '..';
 
 export
-class BinanceFuturesLong extends FuturesExchange {
+class BinanceFuturesLong extends Futures {
   public constructor(public readonly Exchange: binance) { super() }
 
   public async MarketOpen(symbol: string, funds: number): Promise<OrderX> {
