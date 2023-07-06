@@ -10,9 +10,9 @@ const secret = require('../.secret.json');
 async function main() {
   const spot = await CreateBinanceSpot(secret.exchange);
   const trader = new FullTrader(spot, { USDT: 12 });
-  const open_order = await trader.MarketOpenFull('ETH/USDT');
+  const open_order = await trader.MarketOpenFull('ARB/USDT');
   fs.writeFileSync('output/fopen.json', JSON.stringify(open_order, null, 2));
-  const close_order = await trader.MarketCloseFull('ETH/USDT');
+  const close_order = await trader.MarketCloseFull('ARB/USDT');
   fs.writeFileSync('output/fclose.json', JSON.stringify(close_order, null, 2));
 }
 
