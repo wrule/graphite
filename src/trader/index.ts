@@ -1,8 +1,8 @@
-
+// 2023年07月06日13:25:58
 export
 class Trader {
-  public constructor(params: { [name: string]: number } = { }) {
-    this.wallet = new Map<string, number>(Object.entries(params));
+  public constructor(assets: { [name: string]: number } = { }) {
+    this.wallet = new Map<string, number>(Object.entries(assets));
   }
 
   private wallet: Map<string, number>;
