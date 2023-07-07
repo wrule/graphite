@@ -9,7 +9,6 @@ abstract class Spot extends ExchangeX {
   protected async fetchFreeBalanceByCurrency(currency: string) {
     try {
       const balance: any = await this.Exchange.fetchFreeBalance();
-      console.log(5678, balance);
       return (balance[currency] ?? 0) as number;
     } catch (e) { throw CopyError(e); }
   }
